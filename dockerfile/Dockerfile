@@ -16,6 +16,10 @@ RUN apt-get -y upgrade
 RUN apt-get install -y software-properties-common
 RUN apt-get install -y curl git htop unzip vim wget
 
+# Ubuntu and Debian Yocto dependencies:
+# The essential and graphical support packages you need for a supported Ubuntu or Debian distribution are shown in the following command: 
+RUN apt-get install -y apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath libsdl1.2-dev xterm
+
 # Add files.
 ADD root/.bashrc /root/.bashrc
 ADD root/.gitconfig /root/.gitconfig
