@@ -48,7 +48,7 @@ git branch -a
 
 # now we need a way to pull branches and fixed over to yocto
 cd /home/rber/projects/docker/yocto-autobuilder/scripts
-cp ~/projects/meta-yocto/scripts/pull-from-yocto-top.sh .
+cp ~/projects/docker/yocto/scripts/pull-from-yocto-top.sh .
 mv pull-from-yocto-top.sh pull-from-yocto-autobuilder-top.sh
 
 # and you need to cook pull-from-yocto-autobuilder-top.sh
