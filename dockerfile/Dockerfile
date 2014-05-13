@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM reliableembeddedsystems/ubuntu-base
+FROM reslocal/yocto
 
 # Ubuntu and Debian Yocto dependencies:
 # The essential and graphical support packages you need for a supported Ubuntu or Debian distribution are shown in the following command: 
@@ -27,13 +27,15 @@ RUN sudo apt-get install -y tightvncserver xtightvncviewer sqlite
 RUN sudo apt-get install -y tightvncserver xtightvncviewer
 
 # somehow permissions got screwed up
-RUN chown -R genius:genius /home/genius
+#RUN chown -R genius:genius /home/genius
 
 # Set environment variables.
-ENV HOME /home/genius
+#ENV HOME /home/genius
 
 # Define working directory.
-WORKDIR /home/genius
+#WORKDIR /home/genius
 
 # Default User
-USER genius
+#USER genius
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
