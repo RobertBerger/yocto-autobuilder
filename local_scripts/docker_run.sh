@@ -7,6 +7,7 @@ then
     echo "+ use something like:"
     echo "+ $0 <docker image> <network interface>" 
     echo "+ $0 reslocal/yocto-autobuilder br0"
+    echo "+ $0 reslocal/yocto-autobuilder docker0"
     exit
 fi
 
@@ -18,14 +19,19 @@ sudo modprobe tun
 #echo "+ ID=\$(docker run -i -t -d -p 22 --privileged ${IMAGE_NAME} /bin/bash)"
 #ID=$(docker run -i -t -d -p 22 --privileged ${IMAGE_NAME} /bin/bash)
 
-echo "+ ID=\$(docker run -t -i -d -p 22 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
-ID=$(docker run -t -i -d -p 22 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
+echo "+ ID=\$(docker run -t -i -d -p 22 -p 8010 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
+ID=$(docker run -t -i -d -p 22 -p 8010 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
 
 # ssh stuff:
 PORT=$(docker port ${ID} 22 | awk -F':' '{ print $2 }')
 IPADDR=$(ifconfig ${NETWORK_INTERFACE} | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 echo "+ ssh to the container like this:"
 echo "ssh -X genius@${IPADDR} -p ${PORT}"
+
+# web stuff:
+WEBPORT=$(docker port ${ID} 8010 | awk -F':' '{ print $2 }')
+echo "+ point your browser to:"
+echo "http://${IPADDR}:${WEBPORT}"
 
 # let's attach to it:
 echo "+ docker attach ${ID}"
