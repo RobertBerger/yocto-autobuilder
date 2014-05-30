@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM reslocal/yocto
+FROM reliableembeddedsystems/yocto
 
 # Ubuntu and Debian Yocto dependencies:
 # The essential and graphical support packages you need for a supported Ubuntu or Debian distribution are shown in the following command: 
