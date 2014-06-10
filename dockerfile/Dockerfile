@@ -23,19 +23,17 @@ RUN sudo apt-get install -y python-kinterbasdb python-pymssql
 # autobuilder dependencies
 RUN sudo apt-get install -y tightvncserver xtightvncviewer sqlite
 
+# autobuilder patching
+RUN puppet apply --modulepath=/modules -e "class { 'autobuilder_before_install': }"
+
+# here we actually install the yocto-autobuilder
+RUN (su genius -c "cd /home/genius/test/yocto-autobuilder ; ./yocto-stop-autobuilder both; . ./yocto-autobuilder-setup; ./yocto-start-autobuilder both")
+
+# Add one time startup script to start yocto-autobuilder
+ADD etc_my_init.d/02_start_autobuilder.sh /etc/my_init.d/02_start_autobuilder.sh
+
 # in case the sanity tests failed
 #RUN sudo apt-get install -y tightvncserver xtightvncviewer
 
-# somehow permissions got screwed up
-#RUN chown -R genius:genius /home/genius
-
-# Set environment variables.
-#ENV HOME /home/genius
-
-# Define working directory.
-#WORKDIR /home/genius
-
-# Default User
-#USER genius
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
