@@ -36,8 +36,8 @@ ADD etc_my_init.d/02_start_autobuilder.sh /etc/my_init.d/02_start_autobuilder.sh
 #RUN sudo apt-get install -y tightvncserver xtightvncviewer
 
 # some permissions got screwed up (puppet?) - fix:
-RUN chown genius:genius /home/genius
-RUN chown genius:genius /home/genius/test
+#RUN chown genius:genius /home/genius
+#RUN chown genius:genius /home/genius/test
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
