@@ -23,6 +23,9 @@ RUN sudo apt-get install -y python-kinterbasdb python-pymssql
 # autobuilder dependencies
 RUN sudo apt-get install -y tightvncserver xtightvncviewer sqlite
 
+# for bitbake core-image-minimal -g -u depexp
+RUN sudo apt-get install -y python-gobject-2 python-gtk2
+
 # autobuilder patching
 RUN puppet apply --modulepath=/modules -e "class { 'autobuilder_before_install': }"
 
