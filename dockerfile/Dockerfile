@@ -13,6 +13,9 @@ FROM reliableembeddedsystems/yocto
 # additional (old?) Yocto dependencies:
 #RUN sudo apt-get install -y make xsltproc docbook-utils fop autoconf automake libtool libglib2.0-dev
 
+# update
+RUN sudo apt-get update
+
 # buildbot dependencies
 RUN sudo apt-get install -y libjs-sphinxdoc libjs-underscore python-decorator python-jinja2 python-markupsafe python-migrate
 RUN sudo apt-get install -y python-sqlalchemy python-sqlalchemy-ext python-sqlparse python-tempita python-twisted-mail
@@ -33,7 +36,7 @@ RUN sudo apt-get install -y pv
 RUN sudo apt-get install python-gtk2
 
 # for toaster
-RUN sudo apt-get install python-pip xdg-utils
+RUN sudo apt-get install -y python-pip xdg-utils
 
 # autobuilder patching
 RUN puppet apply --modulepath=/modules -e "class { 'autobuilder_before_install': }"
