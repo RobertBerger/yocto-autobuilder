@@ -15,8 +15,8 @@ fi
 echo "+ sudo modprobe tun"
 sudo modprobe tun
 
-echo "+ ID=\$(docker run -t -i -d -p 22 -p 8010 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
-ID=$(docker run -t -i -d -p 22 -p 8010 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
+echo "+ ID=\$(docker run -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
+ID=$(docker run -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
 
 # ssh stuff:
 PORT=$(docker port ${ID} 22 | awk -F':' '{ print $2 }')
