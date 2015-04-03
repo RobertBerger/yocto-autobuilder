@@ -29,6 +29,13 @@ WEBPORT=$(docker port ${ID} 8010 | awk -F':' '{ print $2 }')
 echo "+ point your browser to:"
 echo "http://${IPADDR}:${WEBPORT}"
 
+# toaster stuff:
+PORT_8000=$(docker port ${ID} 8000 | awk -F':' '{ print $2 }')
+PORT_8200=$(docker port ${ID} 8200 | awk -F':' '{ print $2 }')
+echo "+ port 8000 maps to: ${PORT_8000}"
+echo "+ for toaster point your browser to http://${IPADDR}:${PORT_8000}/toastergui"
+echo "+ port 8200 maps to: ${PORT_8200}"
+
 # let's attach to it:
 echo "+ docker attach ${ID}"
 docker attach ${ID}
