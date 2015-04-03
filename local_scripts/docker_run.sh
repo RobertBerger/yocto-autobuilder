@@ -19,8 +19,8 @@ sudo modprobe tun
 #echo "+ ID=\$(docker run -i -t -d -p 22 --privileged ${IMAGE_NAME} /bin/bash)"
 #ID=$(docker run -i -t -d -p 22 --privileged ${IMAGE_NAME} /bin/bash)
 
-echo "+ ID=\$(docker run -t -i -d -p 22 -p 8010 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
-ID=$(docker run -t -i -d -p 22 -p 8010 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
+echo "+ ID=\$(docker run -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
+ID=$(docker run -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
 
 # ssh stuff:
 PORT=$(docker port ${ID} 22 | awk -F':' '{ print $2 }')
@@ -32,6 +32,12 @@ echo "ssh -X genius@${IPADDR} -p ${PORT}"
 WEBPORT=$(docker port ${ID} 8010 | awk -F':' '{ print $2 }')
 echo "+ point your browser to:"
 echo "http://${IPADDR}:${WEBPORT}"
+
+# toaster stuff:
+PORT_8000=$(docker port ${ID} 8000 | awk -F':' '{ print $2 }')
+PORT_8200=$(docker port ${ID} 8200 | awk -F':' '{ print $2 }')
+echo "+ port 8000 maps to: ${PORT_8000}"
+echo "+ port 8200 maps to: ${PORT_8200}"
 
 # let's attach to it:
 echo "+ docker attach ${ID}"
