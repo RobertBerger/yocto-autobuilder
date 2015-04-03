@@ -26,6 +26,15 @@ RUN sudo apt-get install -y tightvncserver xtightvncviewer sqlite
 # for bitbake core-image-minimal -g -u depexp
 RUN sudo apt-get install -y python-gobject-2 python-gtk2
 
+# tools I use
+RUN sudo apt-get install -y pv
+
+# for hob
+RUN sudo apt-get install python-gtk2
+
+# for toaster
+RUN sudo apt-get install python-pip xdg-utils
+
 # autobuilder patching
 RUN puppet apply --modulepath=/modules -e "class { 'autobuilder_before_install': }"
 
@@ -41,6 +50,10 @@ ADD etc_my_init.d/02_start_autobuilder.sh /etc/my_init.d/02_start_autobuilder.sh
 # some permissions got screwed up (puppet?) - fix:
 RUN chown genius:genius /home/genius
 RUN chown genius:genius /home/genius/test
+
+# more for toaster
+ADD bitbake/toaster-requirements.txt /home/genius/bitbake/toaster-requirements.txt
+RUN sudo pip install -r /home/genius/bitbake/toaster-requirements.txt
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
