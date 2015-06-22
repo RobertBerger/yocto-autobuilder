@@ -15,13 +15,8 @@ fi
 echo "+ sudo modprobe tun"
 sudo modprobe tun
 
-if [ ! -d /opt/yocto-autobuilder-volume ]; then
-  sudo mkdir /opt/yocto-autobuilder-volume
-  sudo chmod 777 /opt/yocto-autobuilder-volume
-fi
-
-echo "+ ID=\$(docker run -v /opt/yocto-autobuilder-volume:/tmp/yocto-autobuilder -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
-ID=$(docker run -v /opt/yocto-autobuilder-volume:/tmp/yocto-autobuilder -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
+echo "+ ID=\$(docker run -v /opt/docker-volume-1:/tmp/yocto-autobuilder -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
+ID=$(docker run -v /opt/docker-volume-1:/tmp/yocto-autobuilder -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged -d ${IMAGE_NAME} /sbin/my_init -- bash -l)
 
 # ssh stuff:
 PORT=$(docker port ${ID} 22 | awk -F':' '{ print $2 }')
