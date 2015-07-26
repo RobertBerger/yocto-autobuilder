@@ -47,6 +47,9 @@ RUN (su genius -c "cd /home/genius/test/yocto-autobuilder ; ./yocto-stop-autobui
 # Add one time startup script to start yocto-autobuilder
 ADD etc_my_init.d/02_start_autobuilder.sh /etc/my_init.d/02_start_autobuilder.sh
 
+# make byobu backend screen
+RUN find /etc/byobu/backend -exec sed -i 's/tmux/screen/g' {} \;
+
 # in case the sanity tests failed
 #RUN sudo apt-get install -y tightvncserver xtightvncviewer
 
