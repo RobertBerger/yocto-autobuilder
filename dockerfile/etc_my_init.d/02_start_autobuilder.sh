@@ -1,11 +1,14 @@
 #!/bin/bash
 set -e
 
+# check if we have /tmp/yocto-autobuilder
 if grep -qs '/tmp/yocto-autobuilder' /proc/mounts; then
     echo "/tmp/yocto-autobuilder is mounted."
 
+    # do we have /tmp/yocto-autobuilder and /home/genius/test/yocto-autobuilder?
     if [[ -d /home/genius/test/yocto-autobuilder ]]; then
-
+      
+      # we have /tmp/yocto-autobuilder and /home/genius/test/yocto-autobuilder
       if [[ $(stat -c %U /home/genius) == "root" ]]; then
         echo "fixing pemissions"
         sudo chown genius:genius /home/genius
@@ -16,8 +19,11 @@ if grep -qs '/tmp/yocto-autobuilder' /proc/mounts; then
         sudo chown genius:genius /home/genius/test
       fi
 
-      rsync -avp /home/genius/test/yocto-autobuilder /tmp/yocto-autobuilder
-      mv /home/genius/test/yocto-autobuilder /home/genius/test/yocto-autobuilder.ori
+      #rsync -avp /home/genius/test/yocto-autobuilder /tmp/yocto-autobuilder
+      #mv /home/genius/test/yocto-autobuilder /home/genius/test/yocto-autobuilder.ori
+      sudo rm -rf /tmp/yocto-autobuilder/yocto-autobuilder
+      mv /home/genius/test/yocto-autobuilder/ /tmp/yocto-autobuilder/yocto-autobuilder
+      rm -f /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/twistd.pid
     else
       echo "/home/genius/test/yocto-autobuilder does not exist anymore"
     fi
