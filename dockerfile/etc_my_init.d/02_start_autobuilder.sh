@@ -21,9 +21,24 @@ if grep -qs '/tmp/yocto-autobuilder' /proc/mounts; then
 
       #rsync -avp /home/genius/test/yocto-autobuilder /tmp/yocto-autobuilder
       #mv /home/genius/test/yocto-autobuilder /home/genius/test/yocto-autobuilder.ori
-      sudo rm -rf /tmp/yocto-autobuilder/yocto-autobuilder
-      mv /home/genius/test/yocto-autobuilder/ /tmp/yocto-autobuilder/yocto-autobuilder
-      rm -f /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/twistd.pid
+      read -r -p "Do you really want to wipe your build dirs and (maybe) update yocto-autobuilder? [y/N] " response
+      case $response in
+        [yY][eE][sS]|[yY])
+        set -x
+        sudo rm -rf /tmp/yocto-autobuilder/yocto-autobuilder
+        mv /home/genius/test/yocto-autobuilder/ /tmp/yocto-autobuilder/yocto-autobuilder
+        rm -f /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/twistd.pid
+        set +x
+        ;;
+    *)
+        echo "leaving the yocto-autobuilder as you have it plus build dirs"
+        #rsync -avp /home/genius/test/yocto-autobuilder /tmp/yocto-autobuilder
+        mv /home/genius/test/yocto-autobuilder /home/genius/test/yocto-autobuilder.ori
+        ;;
+      esac
+#      sudo rm -rf /tmp/yocto-autobuilder/yocto-autobuilder
+#      mv /home/genius/test/yocto-autobuilder/ /tmp/yocto-autobuilder/yocto-autobuilder
+#      rm -f /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/twistd.pid
     else
       echo "/home/genius/test/yocto-autobuilder does not exist anymore"
     fi
