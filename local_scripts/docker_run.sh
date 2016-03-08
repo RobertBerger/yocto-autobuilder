@@ -7,7 +7,7 @@ then
     echo "+ use something like:"
     echo "+ $0 <docker image> <network interface>" 
     echo "+ $0 reslocal/yocto-autobuilder br0"
-    echo "+ $0 reslocal/yocto-autobuilder docker0"
+    echo "+ $0 resloacl/yocto-autobuilder docker0"
     exit
 fi
 
@@ -15,12 +15,13 @@ fi
 echo "+ sudo modprobe tun"
 sudo modprobe tun
 
-# run the image
-#echo "+ ID=\$(docker run -i -t -d -p 22 --privileged ${IMAGE_NAME} /bin/bash)"
-#ID=$(docker run -i -t -d -p 22 --privileged ${IMAGE_NAME} /bin/bash)
+if [ ! -d /opt/yocto-autobuilder-volume ]; then
+  sudo mkdir /opt/yocto-autobuilder-volume
+  sudo chmod 777 /opt/yocto-autobuilder-volume
+fi
 
-echo "+ ID=\$(docker run -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
-ID=$(docker run -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
+echo "+ ID=\$(docker run -v /opt:/nfs -v /tftpboot:/tftpboot -v /opt/yocto-autobuilder-volume:/tmp/yocto-autobuilder -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)"
+ID=$(docker run -v /opt:/nfs -v /tftpboot:/tftpboot -v /opt/yocto-autobuilder-volume:/tmp/yocto-autobuilder -t -i -d -p 22 -p 8010 -p 8000 -p 8200 --privileged ${IMAGE_NAME} /sbin/my_init -- bash -l)
 
 # ssh stuff:
 PORT=$(docker port ${ID} 22 | awk -F':' '{ print $2 }')
@@ -30,7 +31,7 @@ echo "ssh -X genius@${IPADDR} -p ${PORT}"
 
 # web stuff:
 WEBPORT=$(docker port ${ID} 8010 | awk -F':' '{ print $2 }')
-echo "+ for autobuilder point your browser to:"
+echo "+ point your browser to:"
 echo "http://${IPADDR}:${WEBPORT}"
 
 # toaster stuff:
