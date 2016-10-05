@@ -7,7 +7,7 @@ then
     echo "+ use something like:"
     echo "+ $0 <docker image> <network interface>" 
     echo "+ $0 reslocal/yocto-autobuilder br0"
-    echo "+ $0 resloacl/yocto-autobuilder docker0"
+    echo "+ $0 reslocal/yocto-autobuilder docker0"
     exit
 fi
 

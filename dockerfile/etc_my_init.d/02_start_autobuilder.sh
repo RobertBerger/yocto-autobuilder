@@ -26,7 +26,9 @@ if grep -qs '/tmp/yocto-autobuilder' /proc/mounts; then
         [yY][eE][sS]|[yY])
         set -x
         sudo rm -rf /tmp/yocto-autobuilder/yocto-autobuilder
-        mv /home/genius/test/yocto-autobuilder/ /tmp/yocto-autobuilder/yocto-autobuilder
+        # for testing purposes we use rsync instead of mv
+        #mv /home/genius/test/yocto-autobuilder/ /tmp/yocto-autobuilder/yocto-autobuilder
+        rsync -ap /home/genius/test/yocto-autobuilder /tmp/yocto-autobuilder
         rm -f /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/twistd.pid
         set +x
         ;;
@@ -49,7 +51,8 @@ fi
 
   if [[ -d /tmp/yocto-autobuilder/yocto-autobuilder ]]; then
         echo "starting yocto-autobuilder..."
-        (su genius -c "cd /tmp/yocto-autobuilder/yocto-autobuilder ; ./yocto-stop-autobuilder both; . ./yocto-autobuilder-setup; ./yocto-start-autobuilder both")
+        #ps -ef
+        (su genius -c "cd /tmp/yocto-autobuilder/yocto-autobuilder ; ./yocto-stop-autobuilder both; ./ab-prserv stop; . ./yocto-autobuilder-setup; ./yocto-start-autobuilder both")
   fi
 
 # if [[ $(stat -c %U /home/genius) == "root" ]]; then

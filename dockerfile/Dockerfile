@@ -33,7 +33,7 @@ RUN sudo apt-get install -y python-gobject-2 python-gtk2
 RUN sudo apt-get install -y pv
 
 # for hob
-RUN sudo apt-get install python-gtk2
+RUN sudo apt-get install -y python-gtk2
 
 # for toaster
 RUN sudo apt-get install -y python-pip xdg-utils
@@ -57,9 +57,24 @@ RUN find /etc/byobu/backend -exec sed -i 's/tmux/screen/g' {} \;
 RUN chown genius:genius /home/genius
 RUN chown genius:genius /home/genius/test
 
+# what works on non-docker Ubuntu 16 for toaster
+RUN sudo apt-get install -y python-pip
+#RUN (su genius -c "sudo -H pip install --upgrade pip")
+#RUN (su genius -c "sudo -H pip install django==1.6")
+#RUN (su genius -c "sudo -H pip install south==0.8.4")
+RUN sudo apt-get install -y daemon
+
 # more for toaster
-ADD bitbake/toaster-requirements.txt /home/genius/bitbake/toaster-requirements.txt
-RUN sudo pip install -r /home/genius/bitbake/toaster-requirements.txt
+#ADD bitbake/toaster-requirements.txt /home/genius/bitbake/toaster-requirements.txt
+#RUN sudo pip install -r /home/genius/bitbake/toaster-requirements.txt
+
+# what works on non-docker Ubuntu 16 for toaster
+RUN sudo apt-get install -y python-pip
+#RUN (su genius -c "sudo -H pip install --upgrade pip")
+#RUN (su genius -c "sudo -H pip install django==1.6")
+#RUN (su genius -c "sudo -H pip install south==0.8.4")
+RUN sudo apt-get install -y daemon
+
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
