@@ -35,7 +35,10 @@ if grep -qs '/tmp/yocto-autobuilder' /proc/mounts; then
     *)
         echo "leaving the yocto-autobuilder as you have it plus build dirs"
         #rsync -avp /home/genius/test/yocto-autobuilder /tmp/yocto-autobuilder
-        mv /home/genius/test/yocto-autobuilder /home/genius/test/yocto-autobuilder.ori
+        #mv /home/genius/test/yocto-autobuilder /home/genius/test/yocto-autobuilder.ori
+        set -x
+        rm -f /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/twistd.pid
+        set +x
         ;;
       esac
 #      sudo rm -rf /tmp/yocto-autobuilder/yocto-autobuilder
