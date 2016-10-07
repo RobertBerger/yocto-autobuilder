@@ -11,6 +11,19 @@ then
     exit
 fi
 
+# remove currently running containers
+echo "+ ID_TO_KILL=\$(docker ps -a -q  --filter ancestor=$1)"
+ID_TO_KILL=$(docker ps -a -q  --filter ancestor=$1)
+
+echo "+ docker ps -a"
+docker ps -a
+echo "+ docker stop ${ID_TO_KILL}"
+docker stop ${ID_TO_KILL}
+echo "+ docker rm -f ${ID_TO_KILL}"
+docker rm -f ${ID_TO_KILL}
+echo "+ docker ps -a"
+docker ps -a
+
 # enable TUN device (for qemu)
 echo "+ sudo modprobe tun"
 sudo modprobe tun
