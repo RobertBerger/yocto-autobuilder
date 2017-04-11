@@ -29,6 +29,9 @@ RUN sudo apt-get install -y tightvncserver xtightvncviewer sqlite
 # for bitbake core-image-minimal -g -u depexp
 RUN sudo apt-get install -y python-gobject-2 python-gtk2
 
+# for bitbake core-image-minimal -g -u depexp - Morty
+RUN sudo apt-get install -y libgtk-3-0 libgtk-3-bin libgtk-3-common libgtk-3-dev python3-gi
+
 # tools I use
 RUN sudo apt-get install -y pv
 
