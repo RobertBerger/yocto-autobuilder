@@ -6,9 +6,9 @@ then
     echo "+ $0: Too few arguments!"
     echo "+ use something like:"
     echo "+ $0 <docker image> <network interface>" 
-    echo "+ $0 reliableembeddedsystems/yocto-autobuilder docker0"
-    echo "+ $0 reliableembeddedsystems/yocto-autobuilder $(ip -o -4 route show to default | grep en | awk '{print $5}')"
-    echo "+ $0 reliableembeddedsystems/yocto-autobuilder $(ip -o -4 route show to default | grep wl | awk '{print $5}')"
+    echo "+ $0 reliableembeddedsystems/yocto-autobuilder:pyro-2017-05-29 docker0"
+    echo "+ $0 reliableembeddedsystems/yocto-autobuilder:pyro-2017-05-29 $(ip -o -4 route show to default | grep en | awk '{print $5}')"
+    echo "+ $0 reliableembeddedsystems/yocto-autobuilder:pyro-2017-05-29 $(ip -o -4 route show to default | grep wl | awk '{print $5}')"
     echo "+ available network interfaces:"
     echo "$(ls /sys/class/net)"
     exit
