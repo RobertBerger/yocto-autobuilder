@@ -30,6 +30,11 @@ if grep -qs '/tmp/yocto-autobuilder' /proc/mounts; then
         #mv /home/genius/test/yocto-autobuilder/ /tmp/yocto-autobuilder/yocto-autobuilder
         rsync -ap /home/genius/test/yocto-autobuilder /tmp/yocto-autobuilder
         rm -f /tmp/yocto-autobuilder/yocto-autobuilder/yocto-worker/twistd.pid
+        # bring over default yoctoAB configs and update also yoctoAB.conf
+        cd /home/genius/test/meta-mainline/multi-v7-ml/yocto-autobuilder
+        git pull
+        cp res-custom-pyro-multi-v7-core-image-minimal* /tmp/yocto-autobuilder/yocto-autobuilder/buildset-config/ 
+        cp yoctoAB.conf /tmp/yocto-autobuilder/yocto-autobuilder/buildset-config/
         set +x
         ;;
     *)

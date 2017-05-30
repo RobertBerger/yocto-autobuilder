@@ -5,7 +5,8 @@
 #
 
 # Pull base image.
-FROM reliableembeddedsystems/yocto
+FROM reliableembeddedsystems/yocto:pyro-2017-05-29
+#FROM reslocal/yocto
 
 # Ubuntu and Debian Yocto dependencies:
 # The essential and graphical support packages you need for a supported Ubuntu or Debian distribution are shown in the following command: 
@@ -47,6 +48,9 @@ RUN puppet apply --modulepath=/modules -e "class { 'autobuilder_before_install':
 # here we actually install the yocto-autobuilder
 RUN (su genius -c "cd /home/genius/test/yocto-autobuilder ; ./yocto-stop-autobuilder both; . ./yocto-autobuilder-setup; ./yocto-start-autobuilder both")
 
+# default yoctoAB stuff
+#RUN (su genius -c "cd /home/genius/test/meta-mainline/multi-v7-ml/yocto-autobuilder ; git pull; cp res-custom-pyro-multi-v7-core-image-minimal /tmp/yocto-autobuilder/yocto-autobuilder/buildset-config; cp yoctoAB.conf /tmp/yocto-autobuilder/yocto-autobuilder/buildset-config")
+
 # Add one time startup script to start yocto-autobuilder
 ADD etc_my_init.d/02_start_autobuilder.sh /etc/my_init.d/02_start_autobuilder.sh
 
@@ -77,7 +81,6 @@ RUN sudo apt-get install -y python-pip
 #RUN (su genius -c "sudo -H pip install django==1.6")
 #RUN (su genius -c "sudo -H pip install south==0.8.4")
 RUN sudo apt-get install -y daemon
-
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
